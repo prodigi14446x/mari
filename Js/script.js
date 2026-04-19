@@ -1,4 +1,4 @@
-//© Zero - Código libre no comercial
+//© Prodigi14446x - Código libre no comercial
 
 // Cargar el SVG y animar los corazones
 fetch('Img/treelove.svg')
@@ -133,7 +133,7 @@ function startFloatingObjects() {
   spawn();
 }
 
-// 🎵 Música (ARREGLADA)
+// 🎵 MÚSICA (COMPATIBLE CON GITHUB)
 const songs = [
   "Music/song2.mp3",
   "Music/song1.mp3"
@@ -141,30 +141,20 @@ const songs = [
 
 let currentIndex = 0;
 let audio;
+let started = false;
 
-// Configurar audio al cargar
 window.addEventListener("DOMContentLoaded", () => {
   audio = document.getElementById("bg-music");
-
   if (!audio) return;
 
-  audio.volume = 0.1; // 🔉 bajo
+  audio.volume = 0.1;
   audio.loop = false;
 
-  playSong(currentIndex);
-});
+  // Espera un clic del usuario (necesario en web)
+  document.body.addEventListener("click", startMusic, { once: true });
 
-// Reproducir canción
-function playSong(index) {
-  audio.src = songs[index];
-  audio.play().catch(() => {});
-}
-
-// Cambiar automáticamente
-document.addEventListener("DOMContentLoaded", () => {
-  const audioElement = document.getElementById("bg-music");
-
-  audioElement.addEventListener("ended", () => {
+  // Cambio automático de canción
+  audio.addEventListener("ended", () => {
     currentIndex++;
     if (currentIndex >= songs.length) {
       currentIndex = 0;
@@ -172,3 +162,14 @@ document.addEventListener("DOMContentLoaded", () => {
     playSong(currentIndex);
   });
 });
+
+function startMusic() {
+  if (started) return;
+  started = true;
+  playSong(currentIndex);
+}
+
+function playSong(index) {
+  audio.src = songs[index];
+  audio.play().catch(() => {});
+}
